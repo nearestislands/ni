@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>Nearest Islands</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="find the nearest islands to your location">
+<meta name="keywords" content="island, islands, near islands, nearest islands, islands location, islands coordinates, discover islands">
+<meta name="author" content="Fouad Nouioua">
+<style>
+</style>
+<!-- map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+<!-- / -->
+<!-- Bootstrap 4 -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- / -->
+<link rel="stylesheet" href="nearestislands.css">
+<script src="nearestislands.js"></script>
+<script src="islands-database.js"></script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg bg-light navbar-light">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="#">
+        <img src="island.png" alt="logo" style="width:50px;">
+    </a>    
+
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">NearestIslands</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Discover Islands</a>
+        </li>
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Contact</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Donate</a>
+        </li>
+    </ul>
+</nav>
+<br><br>
+
+<div class="container-fluid" style="padding: 0 15vw 0 15vw">
+
+<div class="container p-0">
+    <h1>Find the nearest islands to your location</h1>
+</div><br>
+
+<div class="justify-content-center bg-light p-4" style="box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.2), 0 4.5px 15px 0 rgba(0, 0, 0, 0.19)">
+    <div class="row">
+        <div class="col-lg-3 form-group">
+            <label>Number of islands</label><br>
+            <input class="form-control" type="number" id="num" min="1" max="10" value="1" title="type the number of islands that you want to display">
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5 form-group">
+            <label>Place name</label><br>
+            <div class="input-group">
+                <input class="form-control" type="text" title="type a place name">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" title="find islands using a place name">Find Islands</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-2">
+            <label>Find my location</label><br>
+            <button class="btn btn-outline-success" title="click here to use your location">GPS</button>
+        </div>
+    </div><br><hr style="width: 75%"><br>
+    <div class="row">
+        <div class="col-lg-1 col-md-0"></div>
+        <div class="col-lg-4 col-md-12 form-group mr-2">
+            <label>Latitude</label>
+            <input class="form-control" type="text" id="lat" value="0.000000000000000" title="type a latitude">
+        </div>
+        <div class="col-lg-4 col-md-12 form-group mr-2">
+            <label>Longitude</label>
+            <input class="form-control" type="text" id="lon" value="0.000000000000000" title="type a longitude">
+        </div>
+        <div class="col-lg-2 col-md-12">
+            <label style="color: transparent">findLatLon</label>
+            <button id="findLatLon" class="btn btn-outline-primary" title="find islands using latitude and longitude" data-toggle="modal" data-target="#nearestIslands">Find Islands</button>
+        </div>
+        <div class="col-lg-1 col-md-0"></div>
+    </div>
+</div><br><br>
+
+<div id="map" style="height: 60vh;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"></div><br><br><br>
+
+</div>
+
+<footer class="bg-light text-center">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Privacy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Terms</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Donate</a>
+        </li>
+    </ul>
+    <h6>nearestislands.com &copy; 2020. All Rights Reserved</h6><div style="width: 100%;height: .5rem"></div>
+</footer>
+
+<!-- The nearest islands -->
+<div class="modal fade" id="nearestIslands">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      
+        <!-- nearest islands Header -->
+        <div class="modal-header">
+          <h3 class="modal-title">The nearest islands to you</h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- nearest islands body -->
+        <div class="modal-body" id="nearestIslandsBody"><ul style="display: none"></ul></div>
+        
+        <!-- nearest islands footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+<script>
+const lat = document.getElementById("lat");
+const lon = document.getElementById("lon");
+let mymap = L.map('map').setView([51.505, -0.09], 4);
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 19,
+    minZoom: 1,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoibmVhcmlzbGFuZHMiLCJhIjoiY2tpbTQ2eWhnMHB4YzJ1cWozNXFqczU5ZSJ9.qLd9JRaAocDGf28CQWGUIw'
+}).addTo(mymap);
+mymap.on('click', function(e) {
+    lat.value = e.latlng.lat;
+    lon.value = e.latlng.lng;
+    let popup = L.popup()
+    .setLatLng(e.latlng)
+    .setContent('<h6>Lat: ' + e.latlng.lat + '</h6>' + '<h6>Lon: ' + e.latlng.lng + '</h6>')
+    .openOn(mymap);
+});
+
+let latitude;
+let longitude;
+document.getElementById("findLatLon").addEventListener("click", function() {
+    latitude = document.getElementById("lat").value;
+    longitude = document.getElementById("lon").value;
+    numberOfIslands = document.getElementById("num").value;
+    nearestIslands(latitude, longitude, "K", numberOfIslands);
+});
+
+</script>
+
+</body>
+
+</html>

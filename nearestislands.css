@@ -1,0 +1,21 @@
+.nav-link {
+    font-size: 18px;
+}
+
+footer .nav-link {
+    font-size: 14px;
+}
+
+h1 {
+    color: #073d5f;
+    font-family: "Inter", sans-serif;
+}
+
+h2 {
+    font-family: "Calibri light", sans-serif;
+}
+
+label {
+    font-size: 16px;
+    font-family: "Inter", sans-serif;
+}
