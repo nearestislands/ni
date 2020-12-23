@@ -67,3 +67,23 @@ function nearestIslands(lat, lon, unit, num) {
     u = "Miles";
 }
 
+// GPS
+
+function setPosition(position) {
+  document.getElementById("lat").value = position.coords.latitude;
+  document.getElementById("lon").value = position.coords.longitude;
+  document.getElementById("findLatLon").click();
+}
+
+function GPS() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(setPosition);
+  } else { 
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+document.getElementById("gps").addEventListener("click", GPS);
+
+
+
